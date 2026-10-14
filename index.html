@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #080008;
+    color: white;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+}
+
+.clock {
+    width: 210px;
+    height: 210px;
+    border: 4px solid #ff4fa3;
+    border-radius: 50%;
+    margin: 0 auto 25px;
+    position: relative;
+    box-shadow: 0 0 30px #ff168855;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff83c2;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.clock::before {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 65px;
+    background: #ff4fa3;
+    bottom: 50%;
+    left: calc(50% - 2.5px);
+    transform-origin: bottom;
+    border-radius: 5px;
+    animation: tick 10s linear forwards;
+}
+
+.clock::after {
+    content: "";
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    background: #ff4fa3;
+    border-radius: 50%;
+}
+
+@keyframes tick {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+#timer {
+    font-size: 42px;
+    color: #ff78bb;
+    margin-bottom: 10px;
+    text-shadow: 0 0 15px #ff1688;
+}
+
+#status {
+    color: #ffb2d9;
+    font-size: 17px;
+}
+
+#birthday {
+    display: none;
+    animation: appear 2s ease forwards;
+}
+
+#birthday h1 {
+    font-size: clamp(35px, 8vw, 65px);
+    color: #ff62b0;
+    text-shadow: 0 0 25px #ff1688;
+    margin: 20px 0;
+}
+
+#birthday p {
+    font-size: 19px;
+    line-height: 1.7;
+    color: #ffd4e9;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: scale(.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.heart {
+    position: fixed;
+    bottom: -40px;
+    color: #ff4fa3;
+    pointer-events: none;
+    z-index: 1;
+    animation: floatUp linear forwards;
+    text-shadow: 0 0 12px #ff1688;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(.7);
+        opacity: 0;
+    }
+    15% { opacity: 1; }
+    100% {
+        transform: translateY(-115vh) rotate(360deg) scale(1.3);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div id="countdown">
+        <div class="clock">12</div>
+        <div id="timer">00:00:10</div>
+        <div id="status">❤️ Get ready for a surprise ❤️</div>
+    </div>
+
+    <div id="birthday">
+        <h1>Happy Birthday! 🎀</h1>
+        <p>
+            💖 HAPPY BIRTHDAY HAYA ! 💖<br><br>
+            May Allah bless you with endless happiness and success<br>
+            May Allah make every coming year better than the last<br>           
+			May Allah never let your beautiful smile fade away 😊<br><br>
+            Stay blessed and keep smiling! ❤️
+        </p>
+    </div>
+
+</div>
+
+<script>
+let seconds = 10;
+let heartInterval;
+
+function updateTimer() {
+    let formatted = "00:00:" + String(seconds).padStart(2, "0");
+    document.getElementById("timer").textContent = formatted;
+
+    if (seconds === 0) {
+        document.getElementById("countdown").style.display = "none";
+        document.getElementById("birthday").style.display = "block";
+
+        document.body.style.background =
+            "radial-gradient(circle, #30001e, #080008 70%)";
+
+        heartInterval = setInterval(createHeart, 100);
+        return;
+    }
+
+    seconds--;
+    setTimeout(updateTimer, 1000);
+}
+
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = ["💗", "💕", "💖", "♥"][Math.floor(Math.random() * 4)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (12 + Math.random() * 25) + "px";
+    heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 7500);
+}
+
+updateTimer();
+</script>
+
+</body>
+</html>
